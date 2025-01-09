@@ -13,41 +13,43 @@
 This Streamlit application leverages Docker for deployment and integrates with various AI models and services. The application provides an interactive user interface for querying and interacting with data stored in a vector store.
 
 ## Folder Structure
-.
-├── fastapi
-└── streamlit
-    ├── app.py
-    ├── data
-    │   └── ollama
-    │       ├── history
-    │       └── models
-    │           ├── blobs
-    │           └── manifests
-    │               └── registry.ollama.ai
-    │                   └── library
-    │                       ├── gemma2
-    │                       │   └── latest
-    │                       └── phi
-    │                           └── latest
-    ├── docker-compose.yml
-    ├── Dockerfile
-    ├── faiss_storage_1500_300
-    │   ├── index.faiss
-    │   └── index.pkl
-    ├── logo
-    │   ├── fastapi.png
-    │   ├── flutter.png
-    │   ├── langchain.jpg
-    │   ├── logo.png
-    │   ├── ollama.jpg
-    │   └── streamlit.png
-    ├── pages
-    │   ├── homepage.py
-    │   ├── querypage.py
-    │   └── stackpage.py
-    ├── README.md
-    ├── requirements.txt
-    └── template.txt
+.  
+├── fastapi  
+│   └── app.py  
+├── streamlit  
+│   └── app.py  
+├── data  
+│   └── ollama  
+│       ├── history  
+│       ├── models  
+│       │   ├── blobs  
+│       │   └── manifests  
+│       ├── registry.ollama.ai  
+│       └── library  
+│           ├── gemma2  
+│           │   └── latest  
+│           └── phi  
+│               └── latest  
+├── docker-compose.yml  
+├── Dockerfile  
+├── faiss_storage_1500_300  
+│   ├── index.faiss  
+│   └── index.pkl  
+├── logo  
+│   ├── fastapi.png  
+│   ├── flutter.png  
+│   ├── langchain.jpg  
+│   ├── logo.png  
+│   ├── ollama.jpg  
+│   └── streamlit.png  
+├── pages  
+│   ├── homepage.py  
+│   ├── querypage.py  
+│   └── stackpage.py  
+├── README.md  
+├── requirements.txt  
+└── template.txt  
+
 
 
 ## Setup-streamlit
