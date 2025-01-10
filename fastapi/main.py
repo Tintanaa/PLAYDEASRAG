@@ -65,7 +65,8 @@ def format_docs(docs):
 def change_prompt(template_file: str = "template.txt"):
     with open(template_file, "r") as file:
         template = file.read()
-    return PromptTemplate(input_variables=['context', 'question'], template=template)
+    os.write(sys.stdout.fileno(), f"Template: {template}\n".encode())
+    return PromptTemplate(input_variables=['context', 'question'], input_types={}, partial_variables={}, template_format='mustache', template=template)
 
 # FastAPI Models
 class ChatRequest(BaseModel):
@@ -97,6 +98,7 @@ search_service = SearchService()
 async def chat(request: ChatRequest):
     try:
         # Initialize the LLM based on the selected model
+        os.write(sys.stdout.fileno(), f"Request: {request}\n".encode())
         llm = initialize_llm(request.model)
 
         # Create the RAG chain
@@ -108,7 +110,7 @@ async def chat(request: ChatRequest):
         )
 
         # Generate response
-        response = rag_chain.invoke({"context": "", "question": request.question})
+        response = rag_chain.invoke(request.question)
         return {"response": response}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error generating response: {e}")
@@ -140,10 +142,21 @@ async def search(request: SearchRequest):
 
 @app.on_event("startup")
 async def start_ngrok():
-    # Start an Ngrok tunnel on the FastAPI app port (8000)
-    ngrok.set_auth_token(ngrok_auth_token)
-    public_url = ngrok.connect(8000, bind_tls=True)
-    os.write(sys.stdout.fileno(), f"App started on url: {public_url}\n".encode())
+    # Check for existing tunnels to avoid creating multiple agents
+    try:
+        ngrok.set_auth_token(ngrok_auth_token)
+        existing_tunnels = ngrok.get_tunnels()
+        
+        if not existing_tunnels:
+            # Start a new tunnel only if no active tunnels are found
+            public_url = ngrok.connect(8000, bind_tls=True)
+            os.write(sys.stdout.fileno(), f"App started on URL: {public_url}\n".encode())
+        else:
+            public_url = existing_tunnels[0].public_url
+            os.write(sys.stdout.fileno(), f"Reusing existing tunnel: {public_url}\n".encode())
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error initializing ngrok tunnel: {e}")
+
 
 
 #use if want to test locally
