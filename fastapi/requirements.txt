@@ -1,0 +1,16 @@
+streamlit
+langchain
+langchain-community
+langchain-ollama
+langchain-core
+langchain_mistralai
+faiss-gpu
+trafilatura
+tavily-python
+pyngrok
+uvicorn
+gunicorn
+fastapi
+pydantic
+ngrok
+#sentence-transformers
