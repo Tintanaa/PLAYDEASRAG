@@ -1,0 +1,19 @@
+services:
+  fastapi:
+    image: makishima/playdeas-fastapi:0.1
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ollama-container
+    environment:
+      - NGROK_AUTH_TOKEN=${NGROK_AUTH_TOKEN}
+    env_file:
+      - .env
+
+  ollama-container:
+    image: ollama/ollama
+    volumes:
+      - ./data/ollama:/root/.ollama
+    ports:
+      - "11434:11434"
+

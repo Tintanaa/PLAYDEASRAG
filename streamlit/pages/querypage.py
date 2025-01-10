@@ -81,7 +81,7 @@ if "selected_model" not in st.session_state:
     st.session_state.selected_model = "phi:latest"
 
 # Model selection
-available_models = ["phi:latest", "gemma2", ""]  # Extend this list as needed
+available_models = ["phi:latest", "gemma2", "phi4"]  # Extend this list as needed
 selected_model = st.selectbox("Choose a model:", available_models, index=0)
 
 # Update the model in session state if it changes
